@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<studio>
+    <dbScripts>
+        <excludes>
+            <postgres>
+                <item name="201009-1332-2-updateCar.sql">
+                    <![CDATA[alter table CARSALE_CAR drop column CAR_TYPE cascade ;]]>
+                </item>
+                <item name="201009-1332-updateDiscriminatorExtCompany.sql">
+                    <![CDATA[--Modify Discriminator for df$Company
+update DF_CORRESPONDENT set TYPE = 'F' where TYPE = 'C'^]]>
+                </item>
+            </postgres>
+        </excludes>
+    </dbScripts>
+</studio>

@@ -1,0 +1,45 @@
+<folders xmlns = "http://schemas.haulmont.com/thesis/4.0/folders.xsd">
+    <folder>
+        <name>AppFolder_doc.carPurchaseRequests</name>
+        <parent>AppFolder_doc.docs</parent>
+        <sortOrder>6</sortOrder>
+        <roles>
+            <role>Manager</role>
+            <role>Master</role>
+            <role>Bank_operator</role>
+        </roles>
+    </folder>
+    <folder>
+        <name>AppFolder_doc.carPurchaseRequests.new</name>
+        <parent>AppFolder_doc.carPurchaseRequests</parent>
+        <sortOrder>1</sortOrder>
+        <entity>carsale$CarPurchase</entity>
+        <roles>
+            <role>Manager</role>
+        </roles>
+        <quantityScript>
+            com/company/carsale/core/appfolders/doc/carpurchase/NewCarPurchasesQty.groovy
+        </quantityScript>
+        <filterQuery>
+            {E}.creator.id = :session$userId and ({E}.proc is null or {E}.proc.name not in ('Утверждение заявки'))
+        </filterQuery>
+    </folder>
+    <folder>
+        <name>AppFolder_doc.carPurchaseRequests.assigned</name>
+        <parent>AppFolder_doc.carPurchaseRequests</parent>
+        <sortOrder>2</sortOrder>
+        <entity>carsale$CarPurchase</entity>
+        <roles>
+            <role>Manager</role>
+            <role>Master</role>
+            <role>Bank_operator</role>
+        </roles>
+        <quantityScript>
+            com/company/carsale/core/appfolders/doc/carpurchase/AssignedCarPurchasesQty.groovy
+        </quantityScript>
+        <filterJoin>join {E}.assignments a</filterJoin>
+        <filterQuery>
+            a.user.id = :session$userId and a.finished is null
+        </filterQuery>
+    </folder>
+</folders>

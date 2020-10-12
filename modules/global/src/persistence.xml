@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  ~ Copyright (c) 2018 Haulmont Technology Ltd. All Rights Reserved.
+  ~ Haulmont Technology proprietary and confidential.
+  ~ Use is subject to license terms.
+  -->
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             version="1.0">
+    <persistence-unit name="carsale"
+                      transaction-type="RESOURCE_LOCAL">
+        <class>com.company.carsale.entity.CarModel</class>
+        <class>com.company.carsale.entity.Car</class>
+        <class>com.company.carsale.entity.CarPurchase</class>
+        <class>com.company.carsale.entity.ExtIndividual</class>
+        <class>com.company.carsale.entity.ExtCompany</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    </persistence-unit>
+</persistence>

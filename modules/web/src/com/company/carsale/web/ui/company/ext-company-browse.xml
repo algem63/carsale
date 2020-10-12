@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        class="com.company.carsale.web.ui.company.ExtCompanyBrowser"
+        extends="com/haulmont/thesis/web/ui/company/company-browse.xml"
+        messagesPack="com.company.carsale.web.ui.company">
+    <dsContext>
+        <groupDatasource id="companiesDs"
+                         class="com.company.carsale.entity.ExtCompany"
+                         view="ExtCompany-browse"/>
+    </dsContext>
+    <layout>
+        <vbox id="table-panel">
+            <groupTable id="companiesTable">
+                <columns>
+                    <column id="carPurchaseCount"/>
+                </columns>
+            </groupTable>
+        </vbox>
+    </layout>
+</window>

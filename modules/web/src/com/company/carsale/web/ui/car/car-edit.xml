@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editCaption"
+        class="com.company.carsale.web.ui.car.CarEdit"
+        datasource="cardDs"
+        messagesPack="com.company.carsale.web.ui.car">
+    <dsContext>
+        <datasource id="cardDs"
+                    class="com.company.carsale.entity.Car"
+                    view="edit">
+            <collectionDatasource id="cardProcDs"
+                                  property="procs"/>
+            <collectionDatasource id="cardRolesDs"
+                                  property="roles"/>
+        </datasource>
+        <hierarchicalDatasource id="attachmentsDs"
+                                class="com.haulmont.workflow.core.entity.CardAttachment"
+                                hierarchyProperty="versionOf"
+                                view="card-edit">
+            <query>
+                <![CDATA[select a from wf$CardAttachment a where a.card.id = :ds$cardDs order by a.createTs desc]]>
+            </query>
+        </hierarchicalDatasource>
+        <collectionDatasource id="cardRelationsDs"
+                              class="com.haulmont.workflow.core.entity.CardRelation"
+                              view="card-relation">
+            <query>
+                <![CDATA[
+                select c from wf$CardRelation c where (c.card.id = :ds$cardDs or c.relatedCard.id = :ds$cardDs)
+                ]]>
+            </query>
+        </collectionDatasource>
+        <collectionDatasource id="carModelsDs"
+                              class="com.company.carsale.entity.CarModel"
+                              view="_minimal">
+            <query>
+                <![CDATA[ select e from carsale$CarModel e ]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <layout spacing="true">
+        <split id="split"
+               height="100%"
+               orientation="vertical"
+               pos="70"
+               width="100%">
+            <hbox id="mainPane"
+                  height="100%"
+                  width="100%">
+                <hbox id="dropZoneBox"
+                      expand="tabsheet"
+                      height="100%"
+                      width="100%">
+                    <tabSheet id="tabsheet"
+                              height="100%">
+                        <tab id="mainTab"
+                             caption="msg://mainTab"
+                             margin="true">
+                            <groupBox id="infoGroupBox"
+                                      height="100%"
+                                      stylename="edit-area">
+                                <scrollBox id="infoScrollBox"
+                                           height="100%"
+                                           scrollBars="both">
+                                    <vbox id="infoVBox"
+                                          width="600px">
+                                        <hbox id="captionInfo"
+                                              align="TOP_CENTER"
+                                              margin="false,false,true,false"
+                                              spacing="true">
+                                            <label value="msg://createTs"/>
+                                            <label id="createTs"
+                                                   datasource="cardDs"
+                                                   dateFormat="msg://dateTimeFormat"
+                                                   property="createTs"
+                                                   stylename="bold"/>
+                                            <hbox id="procStateBox"
+                                                  spacing="true">
+                                                <label value="   |   "/>
+                                                <label value="msg://state"/>
+                                                <hbox id="stateHolder"/>
+                                            </hbox>
+                                        </hbox>
+                                        <fieldGroup id="fieldGroup"
+                                                    datasource="cardDs"
+                                                    stylename="thesis-separator"
+                                                    width="550px">
+                                            <column>
+                                                <field id="number"
+                                                       width="250px"/>
+                                                <field id="carModel"
+                                                       optionsDatasource="carModelsDs"
+                                                       width="250px"/>
+                                                <field id="name"
+                                                       width="250px"/>
+                                                <field id="yearOfRelease"
+                                                       width="250px"/>
+                                                <field id="price"
+                                                       width="250px"/>
+                                                <field id="carType"/>
+                                            </column>
+                                        </fieldGroup>
+                                        <hbox id="signatureBox"
+                                              margin="true,false,false,false"
+                                              spacing="true">
+                                            <label id="signatureLabel"
+                                                   align="MIDDLE_LEFT"
+                                                   value="msg://cardSignatureLab"
+                                                   visible="false"/>
+                                            <button id="cardSignature"
+                                                    stylename="link"
+                                                    visible="false"/>
+                                        </hbox>
+                                        <grid id="attachmentInfo"
+                                              margin="true,false,false,false"
+                                              spacing="true"
+                                              stylename="thesis-separator"
+                                              visible="false"
+                                              width="550px">
+                                            <columns>
+                                                <column flex="1.0"/>
+                                            </columns>
+                                            <rows>
+                                                <row>
+                                                    <vbox id="attachmentBox"
+                                                          height="100%"/>
+                                                </row>
+                                            </rows>
+                                        </grid>
+                                    </vbox>
+                                </scrollBox>
+                            </groupBox>
+                        </tab>
+                        <tab id="attachmentsTab"
+                             caption="msg://attachmentsTab"
+                             margin="true">
+                            <iframe id="cardAttachmentsFrame"
+                                    height="100%"
+                                    screen="cardAttachmentsFrame"/>
+                        </tab>
+                        <tab id="processTab"
+                             caption="msg://processTab"
+                             margin="true">
+                            <iframe id="cardProcFrame"
+                                    height="100%"
+                                    screen="cardProcFrame"/>
+                        </tab>
+                        <tab id="cardTreeTab"
+                             caption="msg://cardTreeTab">
+                            <iframe id="cardTreeFrame"
+                                    height="100%"
+                                    screen="cardTreeFrame"/>
+                        </tab>
+                        <tab id="cardLogTab"
+                             caption="msg://cardLogTab"
+                             lazy="true">
+                            <iframe id="cardLogFrame"
+                                    height="100%"
+                                    screen="cardLogFrame"/>
+                        </tab>
+                        <tab id="securityTab"
+                             caption="msg://securityTab"
+                             lazy="true"
+                             margin="true">
+                            <iframe id="securityFrame"
+                                    height="100%"
+                                    screen="securityFrame"/>
+                        </tab>
+                    </tabSheet>
+                    <vbox height="100%"
+                          margin="false,false,false,true"
+                          spacing="true"
+                          width="220px">
+                        <scrollBox id="actionsFrameScroll"
+                                   height="100%"
+                                   spacing="true">
+                            <vbox id="actionsPane"
+                                  margin="true,true,true,false"
+                                  stylename="edit-area"
+                                  width="200px">
+                                <iframe id="actionsFrame"
+                                        screen="actionsFrame"/>
+                            </vbox>
+                            <iframe id="startProcessButtonsFrame"
+                                    screen="startProcessButtonsFrame"
+                                    width="200px"/>
+                            <vbox id="otherActions"
+                                  margin="true,true,true,false"
+                                  spacing="true"
+                                  stylename="edit-area"
+                                  width="200px">
+                                <popupButton id="createSubCardButton"
+                                             caption="msg://actions.Create"
+                                             width="100%"/>
+                                <button id="fillFromTemplateButton"
+                                        caption="msg://fillFromTemplate"
+                                        width="100%"/>
+                                <runReportPopupButton id="print"
+                                                      caption="msg://print"
+                                                      icon="icons/reports-print.png"
+                                                      width="100%"/>
+                            </vbox>
+                        </scrollBox>
+                    </vbox>
+                </hbox>
+            </hbox>
+            <vbox id="resolutionsPane"
+                  expand="resolutionsFrame"
+                  height="100%"
+                  spacing="true">
+                <label value="msg://resolutions"/>
+                <iframe id="resolutionsFrame"
+                        screen="resolutionsFrame"/>
+            </vbox>
+        </split>
+    </layout>
+    <assign name="fieldWidth"
+            value="200px"/>
+    <assign name="bigFieldWidth"
+            value="550px"/>
+    <assign name="widthWithButton"
+            value="170px"/>
+    <assign name="rightPanelWidth"
+            value="200px"/>
+</window>

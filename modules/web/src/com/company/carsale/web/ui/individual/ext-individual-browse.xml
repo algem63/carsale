@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        class="com.company.carsale.web.ui.individual.ExtIndividualBrowser"
+        extends="com/haulmont/thesis/web/ui/individual/individual-browse.xml"
+        messagesPack="com.company.carsale.web.ui.individual">
+    <layout>
+        <vbox id="table-panel">
+            <filter id="genericFilter"/>
+            <groupTable id="individualsTable">
+                <columns>
+                    <column id="carPurchaseCount"
+                            caption="msg://carPurchaseCount"/>
+                    <column id="carPurchaseCount"/>
+                </columns>
+            </groupTable>
+        </vbox>
+    </layout>
+</window>
